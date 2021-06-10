@@ -4,9 +4,11 @@ class Player {
   int playerId;
   String playerName;
   Icon symbol;
+  Color color;
   Player({
     required this.playerId,
     required this.playerName,
     required this.symbol,
+    required this.color,
   });
 }

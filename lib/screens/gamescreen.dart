@@ -13,16 +13,23 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  Board board = Board();
   Player player1 = Player(
     playerId: 1,
     playerName: "Player 1",
-    symbol: Icon(Icons.circle),
+    symbol: Icon(
+      Icons.circle_outlined,
+      size: 80,
+    ),
+    color: Colors.blue,
   );
   Player player2 = Player(
     playerId: 2,
     playerName: "Player 2",
-    symbol: Icon(Icons.close),
+    symbol: Icon(
+      Icons.close,
+      size: 80,
+    ),
+    color: Colors.red,
   );
   late bool activePlayer1;
   bool gameStart = false;
@@ -51,7 +58,7 @@ class _GameScreenState extends State<GameScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              board.reset();
+              Provider.of<Board>(context, listen: false).reset();
             },
             icon: Icon(Icons.add),
           ),
@@ -59,7 +66,6 @@ class _GameScreenState extends State<GameScreen> {
       ),
       body: Center(
         child: Container(
-          color: Colors.red,
           height: 400,
           width: 400,
           child: GridView.builder(
@@ -85,8 +91,13 @@ class _GameScreenState extends State<GameScreen> {
                   },
                   style: ElevatedButton.styleFrom(
                     // onSurface: Colors.red,
-                    onPrimary: theme.primaryColor,
+                    onPrimary: cell.playerId != null
+                        ? cell.playerId == player1.playerId
+                            ? player1.color
+                            : player2.color
+                        : Colors.white,
                     primary: Colors.white,
+                    alignment: Alignment.center,
                   ),
                   child: cell.playerId != null
                       ? cell.playerId == player1.playerId
