@@ -36,72 +36,71 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return ChangeNotifierProvider<Board>.value(
-      value: board,
-      builder: (context, _) {
-        Board boardProvider = Provider.of<Board>(context);
-        return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: false,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_sharp),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {},
-                child: Text('New Game'),
-              ),
-            ],
+    Board boardProvider = Provider.of<Board>(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_sharp),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        title: Text('Tic-Tac-Toe'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              board.reset();
+            },
+            icon: Icon(Icons.add),
           ),
-          body: Center(
-            child: Container(
-              color: Colors.red,
-              height: 400,
-              width: 400,
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+        ],
+      ),
+      body: Center(
+        child: Container(
+          color: Colors.red,
+          height: 400,
+          width: 400,
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+            ),
+            itemBuilder: (context, index) {
+              final row = index ~/ 3;
+              final col = index % 3;
+              final cell = boardProvider.matrix[row][col];
+              return Container(
+                margin: EdgeInsets.all(10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (boardProvider.newMove(
+                      Move(
+                          x: col,
+                          y: row,
+                          player: activePlayer1 ? player1 : player2),
+                    )) {
+                      activePlayer1 = !activePlayer1;
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    // onSurface: Colors.red,
+                    onPrimary: theme.primaryColor,
+                    primary: Colors.white,
+                  ),
+                  child: cell.playerId != null
+                      ? cell.playerId == player1.playerId
+                          ? player1.symbol
+                          : player2.symbol
+                      : null,
                 ),
-                itemBuilder: (context, index) {
-                  final row = index ~/ 3;
-                  final col = index % 3;
-                  final cell = boardProvider.matrix[row][col];
-                  return Container(
-                    margin: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (boardProvider.newMove(
-                          Move(
-                              x: col,
-                              y: row,
-                              player: activePlayer1 ? player1 : player2),
-                        )) {
-                          activePlayer1 = !activePlayer1;
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        // onSurface: Colors.red,
-                        onPrimary: theme.primaryColor,
-                        primary: Colors.white,
-                      ),
-                      child: cell.playerId != null
-                          ? cell.playerId == player1.playerId
-                              ? player1.symbol
-                              : player2.symbol
-                          : null,
-                    ),
-                  );
-                },
-                itemCount: 9,
-              ),
-            ),
+              );
+            },
+            itemCount: 9,
           ),
-          backgroundColor: theme.primaryColor,
-        );
-      },
+        ),
+      ),
+      backgroundColor: theme.primaryColor,
     );
   }
 }
