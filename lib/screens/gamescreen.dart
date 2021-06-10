@@ -16,16 +16,30 @@ class _GameScreenState extends State<GameScreen> {
   Board board = Board();
   Player player1 = Player(
     playerId: 1,
-    playerName: "dev",
+    playerName: "Player 1",
     symbol: Icon(Icons.circle),
   );
+  Player player2 = Player(
+    playerId: 2,
+    playerName: "Player 2",
+    symbol: Icon(Icons.close),
+  );
+  late bool activePlayer1;
+  bool gameStart = false;
+  bool gameEnd = false;
+  @override
+  void initState() {
+    super.initState();
+    activePlayer1 = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return ChangeNotifierProvider<Board>.value(
       value: board,
       builder: (context, _) {
-        Board board = Provider.of<Board>(context);
+        Board boardProvider = Provider.of<Board>(context);
         return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -35,6 +49,12 @@ class _GameScreenState extends State<GameScreen> {
                 Navigator.of(context).pop();
               },
             ),
+            actions: [
+              TextButton(
+                onPressed: () {},
+                child: Text('New Game'),
+              ),
+            ],
           ),
           body: Center(
             child: Container(
@@ -43,21 +63,38 @@ class _GameScreenState extends State<GameScreen> {
               width: 400,
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3),
-                itemBuilder: (context, index) => ElevatedButton(
-                  onPressed: () {
-                    board.newMove(
-                        Move(x: index % 3, y: index ~/ 3, player: player1));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    // onSurface: Colors.red,
-                    onPrimary: theme.primaryColor,
-                    primary: Colors.white,
-                  ),
-                  child: Text(
-                      (board.matrix[index ~/ 3][index % 3].playerId ?? 0)
-                          .toString()),
+                  crossAxisCount: 3,
                 ),
+                itemBuilder: (context, index) {
+                  final row = index ~/ 3;
+                  final col = index % 3;
+                  final cell = boardProvider.matrix[row][col];
+                  return Container(
+                    margin: EdgeInsets.all(10),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        if (boardProvider.newMove(
+                          Move(
+                              x: col,
+                              y: row,
+                              player: activePlayer1 ? player1 : player2),
+                        )) {
+                          activePlayer1 = !activePlayer1;
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        // onSurface: Colors.red,
+                        onPrimary: theme.primaryColor,
+                        primary: Colors.white,
+                      ),
+                      child: cell.playerId != null
+                          ? cell.playerId == player1.playerId
+                              ? player1.symbol
+                              : player2.symbol
+                          : null,
+                    ),
+                  );
+                },
                 itemCount: 9,
               ),
             ),

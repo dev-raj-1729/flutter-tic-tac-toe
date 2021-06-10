@@ -24,6 +24,7 @@ class Board with ChangeNotifier {
       return false;
     }
     _matrix[m.y][m.x].playerId = m.player.playerId;
+    print('this works');
     notifyListeners();
     return true;
   }
