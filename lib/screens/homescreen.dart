@@ -11,7 +11,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final bb = Board();
-    bb.matrix[1][0] = 1;
     print(bb.matrix);
     return Scaffold(
       body: Container(

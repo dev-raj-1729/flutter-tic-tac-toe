@@ -1,6 +1,6 @@
 class BoardBox {
-  late int playerId;
-  late int x;
-  late int y;
+  int? playerId;
+  late final int x;
+  late final int y;
   BoardBox({required x, required y, required playerId});
 }
