@@ -1,5 +1,5 @@
 class Player {
-  String playerId;
+  int playerId;
   String playerName;
   String symbol;
   Player({
