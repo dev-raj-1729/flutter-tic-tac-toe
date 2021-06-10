@@ -16,9 +16,37 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_sharp),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ),
       body: Center(
-        child: Text('GameScreen'),
+        child: Container(
+          color: Colors.red,
+          height: 400,
+          width: 400,
+          child: GridView.builder(
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+            itemBuilder: (context, index) => ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                // onSurface: Colors.red,
+                onPrimary: theme.primaryColor,
+                primary: Colors.white,
+              ),
+              child: Text(
+                board.matrix[index ~/ 3][index % 3].toString(),
+              ),
+            ),
+            itemCount: 9,
+          ),
+        ),
       ),
       backgroundColor: theme.primaryColor,
     );
