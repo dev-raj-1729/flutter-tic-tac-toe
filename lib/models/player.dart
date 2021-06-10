@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 class Player {
   int playerId;
   String playerName;
-  String symbol;
+  Icon symbol;
   Player({
     required this.playerId,
     required this.playerName,

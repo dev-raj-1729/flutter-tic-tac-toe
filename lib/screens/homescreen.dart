@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
 import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,8 +9,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final bb = Board();
-    print(bb.matrix);
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
