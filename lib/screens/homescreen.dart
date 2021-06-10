@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
+import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -54,7 +55,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 child: Text('Two Players'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(GameScreen.routeName);
+                },
               ),
             )
           ],
