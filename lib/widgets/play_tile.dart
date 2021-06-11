@@ -16,9 +16,9 @@ class PlayTile extends StatelessWidget {
       margin: EdgeInsets.all(10),
       child: ElevatedButton(
         onPressed: () {
-          if (boardProvider.newMove(
+          boardProvider.newMove(
             Move(x: col, y: row, player: boardProvider.activePlayer),
-          )) {}
+          );
         },
         style: ElevatedButton.styleFrom(
           // onSurface: Colors.red,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board_box.dart';
+import 'package:flutter_tic_tac_toe/models/computer.dart';
 import 'package:flutter_tic_tac_toe/models/move.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
 
@@ -48,6 +49,9 @@ class Board with ChangeNotifier {
     _checkWinner();
     _switchActivePlayer();
     notifyListeners();
+    if (_computerAsPlayer2 && activePlayer.playerId == player2.playerId) {
+      getMoveFromComputer();
+    }
     return true;
   }
 
@@ -208,5 +212,16 @@ class Board with ChangeNotifier {
       3,
       (row) => List<int>.generate(3, (col) => _matrix[row][col].playerId ?? 0),
     );
+  }
+
+  void getMoveFromComputer() {
+    Future.delayed(Duration(milliseconds: 1000)).then((value) {
+      Move next = Computer.nextMove(toIntGrid(), player2);
+      if (_matrix[next.y][next.x].playerId == null) {
+        _matrix[next.y][next.y].playerId = next.player.playerId;
+        _switchActivePlayer();
+        notifyListeners();
+      }
+    });
   }
 }
