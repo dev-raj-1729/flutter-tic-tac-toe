@@ -33,9 +33,12 @@ class PlayTile extends StatelessWidget {
           elevation: 10,
         ),
         child: cell.playerId != null
-            ? Icon(cell.playerId == boardProvider.player1.playerId
-                ? boardProvider.player1.symbol
-                : boardProvider.player2.symbol)
+            ? Icon(
+                cell.playerId == boardProvider.player1.playerId
+                    ? boardProvider.player1.symbol
+                    : boardProvider.player2.symbol,
+                size: 80,
+              )
             : null,
       ),
     );

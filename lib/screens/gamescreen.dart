@@ -59,15 +59,46 @@ class _GameScreenState extends State<GameScreen> {
       ),
       body: AnimatedContainer(
         duration: Duration(
-          milliseconds: 300,
+          milliseconds: 400,
         ),
         color: boardProvider.activePlayer.color,
-        child: Center(
-          child: Container(
-            height: 400,
-            width: 400,
-            child: PlayGrid(),
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 100,
+              color: Colors.red,
+              child: Text(boardProvider.winnerId != null
+                  ? boardProvider.winnerId!.playerName
+                  : ""),
+            ),
+            Center(
+              child: Container(
+                height: 400,
+                width: 400,
+                child: PlayGrid(),
+              ),
+            ),
+            Container(
+              color: Colors.red,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(boardProvider.player1.playerName),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      primary: Colors.white,
+                    ),
+                    child: Text(boardProvider.player2.playerName),
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
       // backgroundColor: theme.primaryColor,

@@ -19,7 +19,7 @@ class Board with ChangeNotifier {
   late Player activePlayer;
   bool gameStart = false;
   bool gameEnd = false;
-  int? _winnerId;
+  Player? _winnerId;
   late List<List<BoardBox>> _matrix;
   Board() {
     activePlayer = player1;
@@ -62,7 +62,7 @@ class Board with ChangeNotifier {
     notifyListeners();
   }
 
-  int? get winnerId {
+  Player? get winnerId {
     return _winnerId;
   }
 
@@ -72,6 +72,14 @@ class Board with ChangeNotifier {
     } else {
       activePlayer = player1;
     }
+  }
+
+  Player? getPlayerFromId(int? playerId) {
+    return player1.playerId == playerId
+        ? player1
+        : player2.playerId == playerId
+            ? player2
+            : null;
   }
 
   void _checkWinner() {
@@ -85,7 +93,8 @@ class Board with ChangeNotifier {
         }
       }
       if (threeFull) {
-        _winnerId = _matrix[i][0].playerId;
+        _winnerId = getPlayerFromId(_matrix[i][0].playerId);
+        return;
       }
     }
     for (int i = 0; i < 3; i++) {
@@ -97,7 +106,8 @@ class Board with ChangeNotifier {
         }
       }
       if (threeFull) {
-        _winnerId = _matrix[i][0].playerId;
+        _winnerId = getPlayerFromId(_matrix[i][0].playerId);
+        return;
       }
     }
     threeFull = true;
@@ -108,7 +118,8 @@ class Board with ChangeNotifier {
       }
     }
     if (threeFull) {
-      _winnerId = _matrix[0][0].playerId;
+      _winnerId = getPlayerFromId(_matrix[0][0].playerId);
+      return;
     }
     threeFull = true;
     for (int i = 1; i < 3; i++) {
