@@ -33,7 +33,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Provider.of<Board>(context, listen: false).setComputer(true);
+                (Provider.of<Board>(context, listen: false)..setComputer(true))
+                    .reset();
                 Navigator.of(context).pushNamed(GameScreen.routeName);
               },
               child: Text('Single Player'),
@@ -55,6 +56,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 child: Text('Two Players'),
                 onPressed: () {
+                  (Provider.of<Board>(context, listen: false)
+                        ..setComputer(false))
+                      .reset();
                   Navigator.of(context).pushNamed(GameScreen.routeName);
                 },
               ),
