@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/models/move.dart';
-import 'package:flutter_tic_tac_toe/models/player.dart';
+// import 'package:flutter_tic_tac_toe/models/move.dart';
+// import 'package:flutter_tic_tac_toe/models/player.dart';
 import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,6 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  @override
   void _showWinnerAlert(String msg) async {
     return showDialog<void>(
       context: context,
@@ -35,9 +34,8 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    // final theme = Theme.of(context);
     Board boardProvider = Provider.of<Board>(context);
-    if (boardProvider.winnerId != null) {}
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -68,8 +66,8 @@ class _GameScreenState extends State<GameScreen> {
             Container(
               height: 100,
               color: Colors.red,
-              child: Text(boardProvider.winnerId != null
-                  ? boardProvider.winnerId!.playerName
+              child: Text(boardProvider.winner != null
+                  ? boardProvider.winner!.playerName
                   : ""),
             ),
             Center(

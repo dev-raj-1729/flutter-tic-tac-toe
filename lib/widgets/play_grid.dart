@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
+// import 'package:flutter_tic_tac_toe/models/board.dart';
 import 'package:flutter_tic_tac_toe/widgets/play_tile.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class PlayGrid extends StatelessWidget {
   @override

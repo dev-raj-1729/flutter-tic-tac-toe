@@ -83,50 +83,94 @@ class Board with ChangeNotifier {
   }
 
   void _checkWinner() {
-    bool threeFull = true;
-    for (int i = 0; i < 3; i++) {
-      threeFull = true;
-      for (int j = 1; j < 3; j++) {
-        if (_matrix[i][j].playerId != _matrix[i][j - 1].playerId ||
-            _matrix[i][j].playerId == null) {
-          threeFull = false;
-        }
-      }
-      if (threeFull) {
-        _winnerId = getPlayerFromId(_matrix[i][0].playerId);
-        return;
-      }
-    }
-    for (int i = 0; i < 3; i++) {
-      threeFull = true;
-      for (int j = 1; j < 3; j++) {
-        if (_matrix[j][i].playerId != _matrix[j - 1][i].playerId ||
-            _matrix[j][i].playerId == null) {
-          threeFull = false;
-        }
-      }
-      if (threeFull) {
-        _winnerId = getPlayerFromId(_matrix[i][0].playerId);
-        return;
-      }
-    }
-    threeFull = true;
-    for (int i = 1; i < 3; i++) {
-      if (_matrix[i][i].playerId != _matrix[i - 1][i - 1].playerId ||
-          _matrix[i][i].playerId == null) {
-        threeFull = false;
-      }
-    }
-    if (threeFull) {
-      _winnerId = getPlayerFromId(_matrix[0][0].playerId);
+    var tempWinner = checkRow();
+    if (tempWinner != null) {
+      _winnerId = tempWinner;
       return;
     }
-    threeFull = true;
-    for (int i = 1; i < 3; i++) {
-      if (_matrix[i][2 - i].playerId != _matrix[i - 1][3 - i].playerId ||
-          _matrix[i][2 - i].playerId == null) {
-        threeFull = false;
+    tempWinner = checkColumn();
+    if (tempWinner != null) {
+      _winnerId = tempWinner;
+      return;
+    }
+    tempWinner = checkDiagonals();
+    if (tempWinner != null) {
+      _winnerId = tempWinner;
+      return;
+    }
+  }
+
+  Player? checkRow() {
+    int player1Count = 0;
+    int player2Count = 0;
+    for (int i = 0; i < 3; i++) {
+      player2Count = player1Count = 0;
+      for (int j = 0; j < 3; j++) {
+        if (_matrix[i][j].playerId == player1.playerId) {
+          player1Count++;
+        } else if (_matrix[i][j].playerId == player2.playerId) {
+          player2Count++;
+        }
+      }
+      if (player1Count == 3) {
+        return player1;
+      } else if (player2Count == 3) {
+        return player2;
       }
     }
+    return null;
+  }
+
+  Player? checkColumn() {
+    int player1Count = 0;
+    int player2Count = 0;
+    for (int i = 0; i < 3; i++) {
+      player1Count = player2Count = 0;
+      for (int j = 0; j < 3; j++) {
+        if (_matrix[j][i].playerId == player1.playerId) {
+          player1Count++;
+        } else if (_matrix[j][i].playerId == player2.playerId) {
+          player2Count++;
+        }
+      }
+      if (player1Count == 3) {
+        return player1;
+      } else if (player2Count == 3) {
+        return player2;
+      }
+    }
+    return null;
+  }
+
+  Player? checkDiagonals() {
+    int player1Count = 0;
+    int player2Count = 0;
+    for (int i = 0; i < 3; i++) {
+      if (_matrix[i][i].playerId == player1.playerId) {
+        player1Count++;
+      } else if (_matrix[i][i].playerId == player2.playerId) {
+        player2Count++;
+      }
+    }
+    if (player1Count == 3) {
+      return player1;
+    } else if (player2Count == 3) {
+      return player2;
+    }
+    player1Count = 0;
+    player2Count = 0;
+    for (int i = 0; i < 3; i++) {
+      if (_matrix[2 - i][i].playerId == player1.playerId) {
+        player1Count++;
+      } else if (_matrix[2 - i][i].playerId == player2.playerId) {
+        player2Count++;
+      }
+    }
+    if (player1Count == 3) {
+      return player1;
+    } else if (player2Count == 3) {
+      return player2;
+    }
+    return null;
   }
 }
