@@ -67,7 +67,9 @@ class _GameScreenState extends State<GameScreen> {
               height: 100,
               color: Colors.red,
               child: Text(boardProvider.winner != null
-                  ? boardProvider.winner!.playerName
+                  ? boardProvider.winner!.playerId != 0
+                      ? boardProvider.winner!.playerName
+                      : "It is a Tie"
                   : ""),
             ),
             Center(

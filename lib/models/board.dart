@@ -39,7 +39,8 @@ class Board with ChangeNotifier {
   }
 
   bool newMove(Move m) {
-    if (_matrix[m.y][m.x].playerId != null || _winnerId != null) {
+    if ((_matrix[m.y][m.x].playerId != null || _winnerId != null) ||
+        (_computerAsPlayer2 && activePlayer.playerId == player2.playerId)) {
       return false;
     }
     _matrix[m.y][m.x].playerId = m.player.playerId;
@@ -98,6 +99,13 @@ class Board with ChangeNotifier {
     if (tempWinner != null) {
       _winnerId = tempWinner;
       return;
+    }
+    if (checkTie()) {
+      _winnerId = Player(
+          color: Colors.blue,
+          playerId: 0,
+          playerName: "Tie",
+          symbol: Icons.no_accounts);
     }
   }
 
@@ -175,11 +183,30 @@ class Board with ChangeNotifier {
     return null;
   }
 
+  bool checkTie() {
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (_matrix[i][j].playerId == null) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   void setComputer(bool b) {
     _computerAsPlayer2 = b;
+    if (_computerAsPlayer2) {}
   }
 
   bool get computer {
     return _computerAsPlayer2;
+  }
+
+  List<List<int>> toIntGrid() {
+    return List<List<int>>.generate(
+      3,
+      (row) => List<int>.generate(3, (col) => _matrix[row][col].playerId ?? 0),
+    );
   }
 }
