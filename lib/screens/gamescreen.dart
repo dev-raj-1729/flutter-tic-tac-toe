@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
 import 'package:flutter_tic_tac_toe/models/move.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
+import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
@@ -13,38 +14,30 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  Player player1 = Player(
-    playerId: 1,
-    playerName: "Player 1",
-    symbol: Icon(
-      Icons.circle_outlined,
-      size: 80,
-    ),
-    color: Colors.blue,
-  );
-  Player player2 = Player(
-    playerId: 2,
-    playerName: "Player 2",
-    symbol: Icon(
-      Icons.close,
-      size: 80,
-    ),
-    color: Colors.red,
-  );
-  late bool activePlayer1;
-  bool gameStart = false;
-  bool gameEnd = false;
   @override
-  void initState() {
-    super.initState();
-    activePlayer1 = true;
+  void _showWinnerAlert(String msg) async {
+    return showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Game Over!'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     Board boardProvider = Provider.of<Board>(context);
-
+    if (boardProvider.winnerId != null) {}
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -64,50 +57,16 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Container(
-          height: 400,
-          width: 400,
-          child: GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-            ),
-            itemBuilder: (context, index) {
-              final row = index ~/ 3;
-              final col = index % 3;
-              final cell = boardProvider.matrix[row][col];
-              return Container(
-                margin: EdgeInsets.all(10),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (boardProvider.newMove(
-                      Move(
-                          x: col,
-                          y: row,
-                          player: activePlayer1 ? player1 : player2),
-                    )) {
-                      activePlayer1 = !activePlayer1;
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    // onSurface: Colors.red,
-                    onPrimary: cell.playerId != null
-                        ? cell.playerId == player1.playerId
-                            ? player1.color
-                            : player2.color
-                        : Colors.white,
-                    primary: Colors.white,
-                    alignment: Alignment.center,
-                  ),
-                  child: cell.playerId != null
-                      ? cell.playerId == player1.playerId
-                          ? player1.symbol
-                          : player2.symbol
-                      : null,
-                ),
-              );
-            },
-            itemCount: 9,
+      body: AnimatedContainer(
+        duration: Duration(
+          milliseconds: 300,
+        ),
+        color: Colors.blue,
+        child: Center(
+          child: Container(
+            height: 400,
+            width: 400,
+            child: PlayGrid(),
           ),
         ),
       ),
