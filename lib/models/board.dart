@@ -49,8 +49,9 @@ class Board with ChangeNotifier {
     }
     _matrix[m.y][m.x].playerId = m.player.playerId;
     print('this works');
-    notifyListeners();
     _checkWinner();
+    _switchActivePlayer();
+    notifyListeners();
     return true;
   }
 
@@ -63,11 +64,20 @@ class Board with ChangeNotifier {
       ),
     );
     _winnerId = null;
+    activePlayer = player1;
     notifyListeners();
   }
 
   int? get winnerId {
     return _winnerId;
+  }
+
+  void _switchActivePlayer() {
+    if (activePlayer.playerId == player1.playerId) {
+      activePlayer = player2;
+    } else {
+      activePlayer = player1;
+    }
   }
 
   void _checkWinner() {

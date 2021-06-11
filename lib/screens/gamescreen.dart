@@ -61,7 +61,7 @@ class _GameScreenState extends State<GameScreen> {
         duration: Duration(
           milliseconds: 300,
         ),
-        color: Colors.blue,
+        color: boardProvider.activePlayer.color,
         child: Center(
           child: Container(
             height: 400,
@@ -70,7 +70,7 @@ class _GameScreenState extends State<GameScreen> {
           ),
         ),
       ),
-      backgroundColor: theme.primaryColor,
+      // backgroundColor: theme.primaryColor,
     );
   }
 }
