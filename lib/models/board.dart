@@ -7,19 +7,13 @@ class Board with ChangeNotifier {
   Player player1 = Player(
     playerId: 1,
     playerName: "Player 1",
-    symbol: Icon(
-      Icons.circle_outlined,
-      size: 80,
-    ),
+    symbol: Icons.circle_outlined,
     color: Colors.green,
   );
   Player player2 = Player(
     playerId: 2,
     playerName: "Player 2",
-    symbol: Icon(
-      Icons.close,
-      size: 80,
-    ),
+    symbol: Icons.close,
     color: Colors.red,
   );
   late Player activePlayer;

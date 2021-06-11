@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Player {
   int playerId;
   String playerName;
-  Icon symbol;
+  IconData symbol;
   Color color;
   Player({
     required this.playerId,
