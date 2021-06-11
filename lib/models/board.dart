@@ -38,7 +38,7 @@ class Board with ChangeNotifier {
   }
 
   bool newMove(Move m) {
-    if (_matrix[m.y][m.x].playerId != null || winnerId != null) {
+    if (_matrix[m.y][m.x].playerId != null || _winnerId != null) {
       return false;
     }
     _matrix[m.y][m.x].playerId = m.player.playerId;
@@ -62,7 +62,7 @@ class Board with ChangeNotifier {
     notifyListeners();
   }
 
-  Player? get winnerId {
+  Player? get winner {
     return _winnerId;
   }
 
