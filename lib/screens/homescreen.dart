@@ -30,9 +30,7 @@ class HomeScreen extends StatelessWidget {
                   fontSize: 25,
                 ),
               ),
-              onPressed: () {
-                // print(Theme.of(context).accentColor);
-              },
+              onPressed: () {},
               child: Text('Single Player'),
             ),
             SizedBox(

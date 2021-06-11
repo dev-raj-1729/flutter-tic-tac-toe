@@ -14,23 +14,23 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  void _showWinnerAlert(String msg) async {
-    return showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Game Over!'),
-        content: Text(msg),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Navigator.of(context).pop();
-            },
-            child: Text("Ok"),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _showWinnerAlert(String msg) async {
+  //   return showDialog<void>(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Game Over!'),
+  //       content: Text(msg),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () {
+  //             // Navigator.of(context).pop();
+  //           },
+  //           child: Text("Ok"),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

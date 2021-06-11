@@ -19,6 +19,7 @@ class Board with ChangeNotifier {
   late Player activePlayer;
   bool gameStart = false;
   bool gameEnd = false;
+  bool _computerAsPlayer2 = false;
   Player? _winnerId;
   late List<List<BoardBox>> _matrix;
   Board() {
@@ -172,5 +173,13 @@ class Board with ChangeNotifier {
       return player2;
     }
     return null;
+  }
+
+  void setComputer(bool b) {
+    _computerAsPlayer2 = b;
+  }
+
+  bool get computer {
+    return _computerAsPlayer2;
   }
 }
