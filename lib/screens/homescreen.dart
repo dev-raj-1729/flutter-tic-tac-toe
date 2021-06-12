@@ -25,19 +25,25 @@ class HomeScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.white,
-                textStyle: TextStyle(
-                  fontSize: 25,
+            Container(
+              width: min(mediaQuery.size.width * 0.90, 350),
+              height: 50,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+                onPressed: () {
+                  (Provider.of<Board>(context, listen: false)
+                        ..setComputer(true))
+                      .reset();
+                  Navigator.of(context).pushNamed(GameScreen.routeName);
+                },
+                child: Text('Single Player'),
               ),
-              onPressed: () {
-                (Provider.of<Board>(context, listen: false)..setComputer(true))
-                    .reset();
-                Navigator.of(context).pushNamed(GameScreen.routeName);
-              },
-              child: Text('Single Player'),
             ),
             SizedBox(
               height: 15,
