@@ -217,11 +217,12 @@ class Board with ChangeNotifier {
   void getMoveFromComputer() {
     Future.delayed(Duration(milliseconds: 1000)).then((value) {
       Move next = Computer.nextMove(toIntGrid(), player2);
-      if (_matrix[next.y][next.x].playerId == null) {
-        _matrix[next.y][next.y].playerId = next.player.playerId;
-        _switchActivePlayer();
-        notifyListeners();
-      }
+      // if (_matrix[next.y][next.x].playerId == null) {
+      _matrix[next.y][next.x].playerId = next.player.playerId;
+      _switchActivePlayer();
+      _checkWinner();
+      notifyListeners();
+      // }
     });
   }
 }
