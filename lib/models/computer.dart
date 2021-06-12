@@ -63,7 +63,7 @@ class Computer {
         }
       }
     }
-    return 10;
+    return 0;
   }
 
   static int _minimax(List<List<int>> board, int depth, bool isMax) {
@@ -114,7 +114,7 @@ class Computer {
         if (board[i][j] == 0) {
           board[i][j] = 2;
           int moveVal = _minimax(board, 0, false);
-
+          print("(${j},${i}):${moveVal}");
           board[i][j] = 0;
 
           if (moveVal > bestVal) {
