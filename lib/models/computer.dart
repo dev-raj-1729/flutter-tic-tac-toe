@@ -3,12 +3,16 @@ import 'package:flutter_tic_tac_toe/models/player.dart';
 import 'dart:math';
 
 class Computer {
-  static Move nextMove(List<List<int>> board, Player player) {
+  static late Player player;
+  static late Player opponent;
+  static Move nextMove(List<List<int>> board, Player player, Player opponent) {
     // for (int i=0;i<3;i++){
     //   for (int j=0;j<3;j++) {
     //     if(board)
     //   }
     // }
+    Computer.player = player;
+    Computer.opponent = opponent;
     print(board);
     Move toReturn = _findBestMove(board, player);
     print(toReturn.x);
@@ -30,9 +34,9 @@ class Computer {
   static int _evaluate(List<List<int>> board) {
     for (int row = 0; row < 3; row++) {
       if (board[row][0] == board[row][1] && board[row][1] == board[row][2]) {
-        if (board[row][0] == 2) {
+        if (board[row][0] == player.playerId) {
           return 10;
-        } else if (board[row][0] == 1) {
+        } else if (board[row][0] == opponent.playerId) {
           return -10;
         }
       }
@@ -40,25 +44,25 @@ class Computer {
 
     for (int col = 0; col < 3; col++) {
       if (board[0][col] == board[1][col] && board[1][col] == board[2][col]) {
-        if (board[0][col] == 2) {
+        if (board[0][col] == player.playerId) {
           return 10;
-        } else if (board[0][col] == 1) {
+        } else if (board[0][col] == opponent.playerId) {
           return -10;
         }
       }
     }
 
     if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-      if (board[0][0] == 2) {
+      if (board[0][0] == player.playerId) {
         return 10;
-      } else if (board[0][0] == 1) {
+      } else if (board[0][0] == opponent.playerId) {
         return -10;
       }
 
       if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-        if (board[0][2] == 2) {
+        if (board[0][2] == player.playerId) {
           return 10;
-        } else if (board[0][2] == 1) {
+        } else if (board[0][2] == opponent.playerId) {
           return -10;
         }
       }
@@ -69,9 +73,7 @@ class Computer {
   static int _minimax(List<List<int>> board, int depth, bool isMax) {
     int score = _evaluate(board);
 
-    if (score == 10) return score;
-
-    if (score == -10) return score;
+    if (score != 0) return score;
 
     if (_isMovesLeft(board) == false) return 0;
 
@@ -80,7 +82,7 @@ class Computer {
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
           if (board[i][j] == 0) {
-            board[i][j] = 2;
+            board[i][j] = player.playerId;
 
             best = max(best, _minimax(board, depth + 1, !isMax));
 
@@ -95,7 +97,7 @@ class Computer {
       for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
           if (board[i][j] == 0) {
-            board[i][j] = 1;
+            board[i][j] = opponent.playerId;
             best = min(best, _minimax(board, depth + 1, !isMax));
             board[i][j] = 0;
           }
@@ -112,7 +114,7 @@ class Computer {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
         if (board[i][j] == 0) {
-          board[i][j] = 2;
+          board[i][j] = player.playerId;
           int moveVal = _minimax(board, 0, false);
           print("(${j},${i}):${moveVal}");
           board[i][j] = 0;
