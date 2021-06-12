@@ -150,6 +150,22 @@ class _GameScreenState extends State<GameScreen> {
                   )
                 ],
               ),
+            ),
+            AnimatedContainer(
+              padding: EdgeInsets.only(left: 30, right: 20),
+              duration: Duration(milliseconds: 400),
+              child: Container(
+                height: 5,
+                width: 100,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              alignment: boardProvider.activePlayer.playerId ==
+                      boardProvider.player1.playerId
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
             )
           ],
         ),

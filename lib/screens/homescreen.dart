@@ -32,10 +32,10 @@ class HomeScreen extends StatelessWidget {
                       color: Colors.white,
                       fontSize: 70,
                     ),
-                    speed: Duration(milliseconds: 60),
+                    speed: Duration(milliseconds: 100),
                   ),
                 ],
-                totalRepeatCount: 100,
+                totalRepeatCount: 1,
               ),
             ),
             Container(

@@ -31,6 +31,9 @@ class PlayTile extends StatelessWidget {
           alignment: Alignment.center,
           shadowColor: Colors.black,
           elevation: 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
         ),
         child: cell.playerId != null
             ? Icon(
