@@ -47,6 +47,13 @@ class _GameScreenState extends State<GameScreen> {
         ),
         title: Text('Tic-Tac-Toe'),
         actions: [
+          if (boardProvider.computer && !boardProvider.gameStart)
+            IconButton(
+              icon: Icon(Icons.play_arrow),
+              onPressed: () {
+                boardProvider.getMoveFromComputer();
+              },
+            ),
           IconButton(
             onPressed: () {
               Provider.of<Board>(context, listen: false).reset();

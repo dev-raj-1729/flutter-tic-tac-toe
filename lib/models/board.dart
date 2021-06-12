@@ -21,7 +21,7 @@ class Board with ChangeNotifier {
   bool gameStart = false;
   bool gameEnd = false;
   bool _computerAsPlayer2 = false;
-  Player? _winnerId;
+  Player? _winner;
   late List<List<BoardBox>> _matrix;
   Board() {
     activePlayer = player1;
@@ -40,10 +40,11 @@ class Board with ChangeNotifier {
   }
 
   bool newMove(Move m) {
-    if ((_matrix[m.y][m.x].playerId != null || _winnerId != null) ||
+    if ((_matrix[m.y][m.x].playerId != null || _winner != null) ||
         (_computerAsPlayer2 && activePlayer.playerId == player2.playerId)) {
       return false;
     }
+    gameStart = true;
     _matrix[m.y][m.x].playerId = m.player.playerId;
     print('this works');
     _checkWinner();
@@ -63,13 +64,14 @@ class Board with ChangeNotifier {
         (col) => BoardBox(x: col, y: row, playerId: null),
       ),
     );
-    _winnerId = null;
+    _winner = null;
     activePlayer = player1;
+    gameStart = false;
     notifyListeners();
   }
 
   Player? get winner {
-    return _winnerId;
+    return _winner;
   }
 
   void _switchActivePlayer() {
@@ -91,21 +93,21 @@ class Board with ChangeNotifier {
   void _checkWinner() {
     var tempWinner = checkRow();
     if (tempWinner != null) {
-      _winnerId = tempWinner;
+      _winner = tempWinner;
       return;
     }
     tempWinner = checkColumn();
     if (tempWinner != null) {
-      _winnerId = tempWinner;
+      _winner = tempWinner;
       return;
     }
     tempWinner = checkDiagonals();
     if (tempWinner != null) {
-      _winnerId = tempWinner;
+      _winner = tempWinner;
       return;
     }
     if (checkTie()) {
-      _winnerId = Player(
+      _winner = Player(
           color: Colors.blue,
           playerId: 0,
           playerName: "Tie",
@@ -215,6 +217,9 @@ class Board with ChangeNotifier {
   }
 
   void getMoveFromComputer() {
+    gameStart = true;
+    activePlayer = player2;
+    notifyListeners();
     Future.delayed(Duration(milliseconds: 1000)).then((value) {
       Move next = Computer.nextMove(toIntGrid(), player2, player1);
       // if (_matrix[next.y][next.x].playerId == null) {
