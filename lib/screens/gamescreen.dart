@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
+import 'package:flutter_tic_tac_toe/models/utility.dart';
 // import 'package:flutter_tic_tac_toe/models/move.dart';
 // import 'package:flutter_tic_tac_toe/models/player.dart';
 import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
@@ -59,7 +60,7 @@ class _GameScreenState extends State<GameScreen> {
         duration: Duration(
           milliseconds: 400,
         ),
-        color: boardProvider.activePlayer.color,
+        color: boardProvider.activePlayer.color[800],
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -80,20 +81,55 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
             Container(
-              color: Colors.red,
+              color: boardProvider.activePlayer.color[900],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: Text(boardProvider.player1.playerName),
+                    style: TextButton.styleFrom(
+                      primary: Colors.white,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          boardProvider.player1.symbol,
+                          color: boardProvider.player1.color,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(boardProvider.player1.playerName),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      print('this works');
+                    },
+                    icon: Icon(
+                      Icons.swap_horiz_rounded,
+                      size: 30,
+                      color: Colors.white,
+                    ),
                   ),
                   TextButton(
                     onPressed: () {},
                     style: TextButton.styleFrom(
                       primary: Colors.white,
                     ),
-                    child: Text(boardProvider.player2.playerName),
+                    child: Row(
+                      children: [
+                        Icon(
+                          boardProvider.player2.symbol,
+                          color: boardProvider.player2.color,
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(boardProvider.player2.playerName),
+                      ],
+                    ),
                   )
                 ],
               ),

@@ -22,14 +22,14 @@ class PlayTile extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           // onSurface: Colors.red,
-          onPrimary: cell.playerId != null
+          primary: cell.playerId != null
               ? cell.playerId == boardProvider.player1.playerId
                   ? boardProvider.player1.color
                   : boardProvider.player2.color
               : Colors.white,
-          primary: Colors.white,
+          onPrimary: Colors.white,
           alignment: Alignment.center,
-          shadowColor: Colors.white,
+          shadowColor: Colors.black,
           elevation: 10,
         ),
         child: cell.playerId != null

@@ -4,7 +4,7 @@ class Player {
   int playerId;
   String playerName;
   IconData symbol;
-  Color color;
+  MaterialColor color;
   Player({
     required this.playerId,
     required this.playerName,
