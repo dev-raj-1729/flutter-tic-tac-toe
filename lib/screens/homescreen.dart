@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
 import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
@@ -20,10 +21,22 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'Choose a game',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 20),
+            Container(
+              height: 250,
+              alignment: Alignment.topCenter,
+              child: AnimatedTextKit(
+                animatedTexts: [
+                  TypewriterAnimatedText(
+                    'Welcome',
+                    textStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 70,
+                    ),
+                    speed: Duration(milliseconds: 60),
+                  ),
+                ],
+                totalRepeatCount: 100,
+              ),
             ),
             Container(
               width: min(mediaQuery.size.width * 0.90, 350),
