@@ -3,7 +3,6 @@ import 'package:flutter_tic_tac_toe/models/board_box.dart';
 import 'package:flutter_tic_tac_toe/models/computer.dart';
 import 'package:flutter_tic_tac_toe/models/move.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
-import 'package:flutter_tic_tac_toe/models/utility.dart';
 
 class Board with ChangeNotifier {
   Player player1 = Player(

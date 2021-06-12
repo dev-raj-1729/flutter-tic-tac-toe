@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/models/utility.dart';
 // import 'package:flutter_tic_tac_toe/models/move.dart';
 // import 'package:flutter_tic_tac_toe/models/player.dart';
 import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
