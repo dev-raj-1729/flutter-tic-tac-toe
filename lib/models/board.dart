@@ -40,7 +40,8 @@ class Board with ChangeNotifier {
   }
 
   bool newMove(Move m) {
-    if ((_matrix[m.y][m.x].playerId != null || _winner != null) ||
+    if (gameEnd ||
+        (_matrix[m.y][m.x].playerId != null || _winner != null) ||
         (_computerAsPlayer2 && activePlayer.playerId == player2.playerId)) {
       return false;
     }
@@ -67,6 +68,7 @@ class Board with ChangeNotifier {
     _winner = null;
     activePlayer = player1;
     gameStart = false;
+    gameEnd = false;
     notifyListeners();
   }
 
@@ -94,24 +96,23 @@ class Board with ChangeNotifier {
     var tempWinner = checkRow();
     if (tempWinner != null) {
       _winner = tempWinner;
+      gameEnd = true;
       return;
     }
     tempWinner = checkColumn();
     if (tempWinner != null) {
       _winner = tempWinner;
+      gameEnd = true;
       return;
     }
     tempWinner = checkDiagonals();
     if (tempWinner != null) {
       _winner = tempWinner;
+      gameEnd = true;
       return;
     }
     if (checkTie()) {
-      _winner = Player(
-          color: Colors.blue,
-          playerId: 0,
-          playerName: "Tie",
-          symbol: Icons.no_accounts);
+      gameEnd = true;
     }
   }
 
@@ -218,6 +219,7 @@ class Board with ChangeNotifier {
 
   void getMoveFromComputer() {
     gameStart = true;
+    if (gameEnd) return;
     activePlayer = player2;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 1000)).then((value) {

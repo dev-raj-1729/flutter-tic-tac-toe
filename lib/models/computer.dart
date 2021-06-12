@@ -73,7 +73,7 @@ class Computer {
   static int _minimax(List<List<int>> board, int depth, bool isMax) {
     int score = _evaluate(board);
 
-    if (score != 0) return score;
+    if (score != 0) return score + (score < 0 ? -depth : depth);
 
     if (_isMovesLeft(board) == false) return 0;
 
