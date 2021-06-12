@@ -71,13 +71,19 @@ class _GameScreenState extends State<GameScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 100,
-              color: Colors.red,
-              child: Text(boardProvider.winner != null
-                  ? boardProvider.winner!.playerId != 0
-                      ? boardProvider.winner!.playerName
-                      : "It is a Tie"
-                  : ""),
+              height: 30,
+              alignment: Alignment.topCenter,
+              child: boardProvider.gameEnd
+                  ? Text(
+                      boardProvider.winner != null
+                          ? "${boardProvider.winner!.playerName} wins!"
+                          : "It's a Tie!",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )
+                  : null,
             ),
             Center(
               child: Container(
@@ -85,6 +91,9 @@ class _GameScreenState extends State<GameScreen> {
                 width: 400,
                 child: PlayGrid(),
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             AnimatedContainer(
               duration: Duration(milliseconds: 400),
@@ -114,7 +123,6 @@ class _GameScreenState extends State<GameScreen> {
                     onPressed: () {
                       Provider.of<Board>(context, listen: false)
                           .switchPlayerSymbols();
-                      print('this works');
                     },
                     icon: Icon(
                       Icons.swap_horiz_rounded,
