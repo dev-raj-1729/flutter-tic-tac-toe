@@ -80,7 +80,8 @@ class _GameScreenState extends State<GameScreen> {
                 child: PlayGrid(),
               ),
             ),
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 400),
               color: boardProvider.activePlayer.color[900],
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -105,6 +106,8 @@ class _GameScreenState extends State<GameScreen> {
                   ),
                   IconButton(
                     onPressed: () {
+                      Provider.of<Board>(context, listen: false)
+                          .switchPlayerSymbols();
                       print('this works');
                     },
                     icon: Icon(

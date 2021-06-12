@@ -3,6 +3,7 @@ import 'package:flutter_tic_tac_toe/models/board_box.dart';
 import 'package:flutter_tic_tac_toe/models/computer.dart';
 import 'package:flutter_tic_tac_toe/models/move.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
+import 'package:flutter_tic_tac_toe/models/utility.dart';
 
 class Board with ChangeNotifier {
   Player player1 = Player(
@@ -14,7 +15,7 @@ class Board with ChangeNotifier {
   Player player2 = Player(
     playerId: 2,
     playerName: "Player 2",
-    symbol: Icons.close,
+    symbol: Icons.close_rounded,
     color: Colors.red,
   );
   late Player activePlayer;
@@ -224,5 +225,15 @@ class Board with ChangeNotifier {
       notifyListeners();
       // }
     });
+  }
+
+  void switchPlayerSymbols() {
+    var tempcol = player1.color;
+    var tempsymb = player1.symbol;
+    player1.color = player2.color;
+    player1.symbol = player2.symbol;
+    player2.color = tempcol;
+    player2.symbol = tempsymb;
+    notifyListeners();
   }
 }
