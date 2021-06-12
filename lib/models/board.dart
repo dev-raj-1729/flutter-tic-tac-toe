@@ -23,6 +23,7 @@ class Board with ChangeNotifier {
   bool _computerAsPlayer2 = false;
   Player? _winner;
   late List<List<BoardBox>> _matrix;
+
   Board() {
     activePlayer = player1;
     _matrix = new List<List<BoardBox>>.generate(
