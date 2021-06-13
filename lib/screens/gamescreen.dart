@@ -151,7 +151,9 @@ class _GameScreenState extends State<GameScreen> {
                         SizedBox(
                           width: 4,
                         ),
-                        Text(boardProvider.player2.playerName),
+                        Text(boardProvider.computer
+                            ? 'Computer'
+                            : boardProvider.player2.playerName),
                       ],
                     ),
                   )
@@ -178,7 +180,6 @@ class _GameScreenState extends State<GameScreen> {
           ],
         ),
       ),
-      // backgroundColor: theme.primaryColor,
     );
   }
 }
