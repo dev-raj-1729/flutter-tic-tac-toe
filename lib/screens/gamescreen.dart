@@ -39,6 +39,7 @@ class _GameScreenState extends State<GameScreen> {
     Board boardProvider = Provider.of<Board>(context);
     final double boardSide = min(
         600, min(mediaQuery.size.width * 0.90, mediaQuery.size.height * 0.6));
+    final double animatedBarOffset = ((mediaQuery.size.width - 200) / 6) * 0.90;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60 * boardSide / 400),
@@ -158,7 +159,8 @@ class _GameScreenState extends State<GameScreen> {
               ),
             ),
             AnimatedContainer(
-              padding: EdgeInsets.only(left: 30, right: 20),
+              padding: EdgeInsets.only(
+                  left: animatedBarOffset * 1.05, right: animatedBarOffset),
               duration: Duration(milliseconds: 400),
               child: Container(
                 height: 5,
