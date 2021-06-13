@@ -7,8 +7,6 @@ import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -22,8 +20,8 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 250,
-              alignment: Alignment.topCenter,
+              height: min(250, mediaQuery.size.height * 25),
+              alignment: Alignment.center,
               child: AnimatedTextKit(
                 animatedTexts: [
                   TypewriterAnimatedText(

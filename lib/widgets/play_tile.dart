@@ -6,14 +6,15 @@ import 'package:provider/provider.dart';
 class PlayTile extends StatelessWidget {
   final int row;
   final int col;
-  PlayTile(this.row, this.col);
+  final double boardSide;
+  PlayTile(this.row, this.col, this.boardSide);
 
   @override
   Widget build(BuildContext context) {
     final boardProvider = Provider.of<Board>(context);
     final cell = boardProvider.matrix[row][col];
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: EdgeInsets.all(10 * (boardSide / 400)),
       child: ElevatedButton(
         onPressed: () {
           boardProvider.newMove(
@@ -30,7 +31,7 @@ class PlayTile extends StatelessWidget {
           onPrimary: Colors.white,
           alignment: Alignment.center,
           shadowColor: Colors.black,
-          elevation: 10,
+          elevation: 10 * (boardSide / 400),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
@@ -40,7 +41,7 @@ class PlayTile extends StatelessWidget {
                 cell.playerId == boardProvider.player1.playerId
                     ? boardProvider.player1.symbol
                     : boardProvider.player2.symbol,
-                size: 80,
+                size: 80 * (boardSide * 0.7 / 400),
               )
             : null,
       ),

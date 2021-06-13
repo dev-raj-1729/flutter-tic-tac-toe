@@ -4,6 +4,7 @@ import 'package:flutter_tic_tac_toe/models/board.dart';
 // import 'package:flutter_tic_tac_toe/models/player.dart';
 import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
 import 'package:provider/provider.dart';
+import 'dart:math';
 
 class GameScreen extends StatefulWidget {
   static const routeName = '/gamescreen';
@@ -34,8 +35,10 @@ class _GameScreenState extends State<GameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final theme = Theme.of(context);
+    final mediaQuery = MediaQuery.of(context);
     Board boardProvider = Provider.of<Board>(context);
+    final double boardSide = min(
+        400, min(mediaQuery.size.width * 0.90, mediaQuery.size.height * 0.5));
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -87,13 +90,13 @@ class _GameScreenState extends State<GameScreen> {
             ),
             Center(
               child: Container(
-                height: 400,
-                width: 400,
-                child: PlayGrid(),
+                height: boardSide,
+                width: boardSide,
+                child: PlayGrid(boardSide),
               ),
             ),
             SizedBox(
-              height: 20,
+              height: 20 * boardSide / 400,
             ),
             AnimatedContainer(
               duration: Duration(milliseconds: 400),
