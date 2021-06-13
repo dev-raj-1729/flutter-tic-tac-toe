@@ -1,132 +1,126 @@
-import 'package:flutter_tic_tac_toe/models/move.dart';
-import 'package:flutter_tic_tac_toe/models/player.dart';
-import 'dart:math';
+class Utils {
+  //region utility
+  static bool isBoardFull(List<int> board) {
+    for (var val in board) {
+      if (val == Ai.EMPTY_SPACE) return false;
+    }
 
-class Computer {
-  static late Player player;
-  static late Player opponent;
-  static Move nextMove(List<List<int>> board, Player player, Player opponent) {
-    // for (int i=0;i<3;i++){
-    //   for (int j=0;j<3;j++) {
-    //     if(board)
-    //   }
-    // }
-    Computer.player = player;
-    Computer.opponent = opponent;
-    print(board);
-    Move toReturn = _findBestMove(board, player);
-    print(toReturn.x);
-    print(toReturn.y);
-    return toReturn;
+    return true;
   }
 
-  static bool _isMovesLeft(List<List<int>> board) {
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (board[i][j] == 0) {
-          return true;
-        }
-      }
-    }
-    return false;
+  static bool isMoveLegal(List<int> board, int move) {
+    if (move < 0 || move >= board.length || board[move] != Ai.EMPTY_SPACE)
+      return false;
+
+    return true;
   }
 
-  static int _evaluate(List<List<int>> board) {
-    for (int row = 0; row < 3; row++) {
-      if (board[row][0] == board[row][1] && board[row][1] == board[row][2]) {
-        if (board[row][0] == player.playerId) {
-          return 10;
-        } else if (board[row][0] == opponent.playerId) {
-          return -10;
-        }
+  /// Returns the current state of the board [winning player, draw or no winners yet]
+  static int evaluateBoard(List<int> board) {
+    for (var list in Ai.WIN_CONDITIONS_LIST) {
+      if (board[list[0]] != Ai.EMPTY_SPACE && // if a player has played here AND
+          board[list[0]] ==
+              board[list[1]] && // if all three positions are of the same player
+          board[list[0]] == board[list[2]]) {
+        return board[list[0]];
       }
     }
 
-    for (int col = 0; col < 3; col++) {
-      if (board[0][col] == board[1][col] && board[1][col] == board[2][col]) {
-        if (board[0][col] == player.playerId) {
-          return 10;
-        } else if (board[0][col] == opponent.playerId) {
-          return -10;
-        }
-      }
+    if (isBoardFull(board)) {
+      return Ai.DRAW;
     }
 
-    if (board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
-      if (board[0][0] == player.playerId) {
-        return 10;
-      } else if (board[0][0] == opponent.playerId) {
-        return -10;
-      }
-
-      if (board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
-        if (board[0][2] == player.playerId) {
-          return 10;
-        } else if (board[0][2] == opponent.playerId) {
-          return -10;
-        }
-      }
-    }
-    return 0;
+    return Ai.NO_WINNERS_YET;
   }
 
-  static int _minimax(List<List<int>> board, int depth, bool isMax) {
-    int score = _evaluate(board);
+  /// Returns the opposite player from the current one.
+  static int flipPlayer(int currentPlayer) {
+    return -1 * currentPlayer;
+  }
+//endregion
+}
 
-    if (score != 0) return score + (score < 0 ? -depth : depth);
+class Ai {
+  // evaluation condition values
+  static const int HUMAN = 1;
+  static const int AI_PLAYER = -1;
+  static const int NO_WINNERS_YET = 0;
+  static const int DRAW = 2;
 
-    if (_isMovesLeft(board) == false) return 0;
+  static const int EMPTY_SPACE = 0;
+  static const SYMBOLS = {EMPTY_SPACE: "", HUMAN: "X", AI_PLAYER: "O"};
 
-    if (isMax) {
-      int best = -1000;
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (board[i][j] == 0) {
-            board[i][j] = player.playerId;
+  // arbitrary values for winning, draw and losing conditions
+  static const int WIN_SCORE = 100;
+  static const int DRAW_SCORE = 0;
+  static const int LOSE_SCORE = -100;
 
-            best = max(best, _minimax(board, depth + 1, !isMax));
+  static const WIN_CONDITIONS_LIST = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
 
-            board[i][j] = 0;
-          }
-        }
-      }
-      return best;
-    } else {
-      int best = 1000;
-
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          if (board[i][j] == 0) {
-            board[i][j] = opponent.playerId;
-            best = min(best, _minimax(board, depth + 1, !isMax));
-            board[i][j] = 0;
-          }
-        }
-      }
-      return best;
-    }
+  /// Returns the optimal move based on the state of the board.
+  int play(List<int> board, int currentPlayer) {
+    return _getBestMove(board, currentPlayer).move;
   }
 
-  static Move _findBestMove(List<List<int>> board, Player player) {
-    int bestVal = -1000;
-    Move bestMove = Move(player: player, x: -1, y: -1);
+  /// Returns the best possible score for a certain board condition.
+  /// This method implements the stopping condition.
+  int _getBestScore(List<int> board, int currentPlayer) {
+    int evaluation = Utils.evaluateBoard(board);
 
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (board[i][j] == 0) {
-          board[i][j] = player.playerId;
-          int moveVal = _minimax(board, 0, false);
-          print("(${j},${i}):${moveVal}");
-          board[i][j] = 0;
+    if (evaluation == currentPlayer) return WIN_SCORE;
 
-          if (moveVal > bestVal) {
-            bestMove.y = i;
-            bestMove.x = j;
-            bestVal = moveVal;
-          }
-        }
+    if (evaluation == DRAW) return DRAW_SCORE;
+
+    if (evaluation == Utils.flipPlayer(currentPlayer)) {
+      return LOSE_SCORE;
+    }
+
+    return _getBestMove(board, currentPlayer).score;
+  }
+
+  /// This is where the actual Minimax algorithm is implemented
+  ComputerMove _getBestMove(List<int> board, int currentPlayer) {
+    // try all possible moves
+    List<int> newBoard;
+    // will contain our next best score
+    ComputerMove bestMove = ComputerMove(score: -10000, move: -1);
+
+    for (int currentMove = 0; currentMove < board.length; currentMove++) {
+      if (!Utils.isMoveLegal(board, currentMove)) continue;
+
+      // we need a copy of the initial board so we don't pollute our real board
+      newBoard = List.from(board);
+
+      // make the move
+      newBoard[currentMove] = currentPlayer;
+
+      // solve for the next player
+      // what is a good score for the opposite player is opposite of good score for us
+      int nextScore = -_getBestScore(newBoard, Utils.flipPlayer(currentPlayer));
+
+      // check if the current move is better than our best found move
+      if (nextScore > bestMove.score) {
+        bestMove.score = nextScore;
+        bestMove.move = currentMove;
       }
     }
+
     return bestMove;
   }
+}
+
+class ComputerMove {
+  int score;
+  int move;
+
+  ComputerMove({required this.score, required this.move});
 }
