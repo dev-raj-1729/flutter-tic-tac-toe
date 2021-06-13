@@ -38,32 +38,35 @@ class _GameScreenState extends State<GameScreen> {
     final mediaQuery = MediaQuery.of(context);
     Board boardProvider = Provider.of<Board>(context);
     final double boardSide = min(
-        400, min(mediaQuery.size.width * 0.90, mediaQuery.size.height * 0.5));
+        600, min(mediaQuery.size.width * 0.90, mediaQuery.size.height * 0.6));
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_sharp),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        title: Text('Tic-Tac-Toe'),
-        actions: [
-          if (boardProvider.computer && !boardProvider.gameStart)
-            IconButton(
-              icon: Icon(Icons.play_arrow),
-              onPressed: () {
-                boardProvider.getMoveFromComputer();
-              },
-            ),
-          IconButton(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60 * boardSide / 400),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_sharp),
             onPressed: () {
-              Provider.of<Board>(context, listen: false).reset();
+              Navigator.of(context).pop();
             },
-            icon: Icon(Icons.add),
           ),
-        ],
+          title: Text('Tic-Tac-Toe'),
+          actions: [
+            if (boardProvider.computer && !boardProvider.gameStart)
+              IconButton(
+                icon: Icon(Icons.play_arrow),
+                onPressed: () {
+                  boardProvider.getMoveFromComputer();
+                },
+              ),
+            IconButton(
+              onPressed: () {
+                Provider.of<Board>(context, listen: false).reset();
+              },
+              icon: Icon(Icons.add),
+            ),
+          ],
+        ),
       ),
       body: AnimatedContainer(
         duration: Duration(
