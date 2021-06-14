@@ -211,11 +211,18 @@ class Board with ChangeNotifier {
     return _computerAsPlayer2;
   }
 
-  List<List<int>> toIntGrid() {
-    return List<List<int>>.generate(
-      3,
-      (row) => List<int>.generate(3, (col) => _matrix[row][col].playerId ?? 0),
-    );
+  List<int> toIntList() {
+    return List<int>.generate(9, (index) {
+      int row = index ~/ 3;
+      int col = index % 3;
+      if (_matrix[row][col].playerId == null) {
+        return 0;
+      } else if (_matrix[row][col].playerId == player1.playerId) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
   }
 
   void getMoveFromComputer() {
@@ -224,7 +231,11 @@ class Board with ChangeNotifier {
     activePlayer = player2;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 1000)).then((value) {
-      Move next = Computer.nextMove(toIntGrid(), player2, player1);
+      // Move next = Computer.nextMove(toIntGrid(), player2, player1);
+      print(toIntList());
+      int move = Ai().play(toIntList(), -1);
+      print(move);
+      Move next = Move(x: move % 3, y: move ~/ 3, player: player2);
       // if (_matrix[next.y][next.x].playerId == null) {
       _matrix[next.y][next.x].playerId = next.player.playerId;
       _switchActivePlayer();
