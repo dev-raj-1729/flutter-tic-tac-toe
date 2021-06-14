@@ -5,6 +5,7 @@ import 'package:flutter_tic_tac_toe/models/log.dart';
 import 'package:flutter_tic_tac_toe/models/logitem.dart';
 import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
 import 'package:flutter_tic_tac_toe/screens/homescreen.dart';
+import 'package:flutter_tic_tac_toe/screens/logscreen.dart';
 import 'package:localstore/localstore.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         // home: HomeScreen(),
         routes: <String, WidgetBuilder>{
           '/': (context) => HomeScreen(),
-          GameScreen.routeName: (context) => GameScreen()
+          GameScreen.routeName: (context) => GameScreen(),
+          LogScreen.routeName: (context) => LogScreen(),
         },
       ),
     );
