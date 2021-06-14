@@ -21,8 +21,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final ls = Log(Localstore.instance);
     ls.fetchAndUpdate();
-    return ChangeNotifierProvider(
-      create: (context) => Board(),
+    return MultiProvider(
+      // create: (context) => Board(),
+      providers: [
+        ChangeNotifierProvider<Board>(create: (context) => Board()),
+        ChangeNotifierProvider.value(value: ls),
+      ],
       builder: (context, _) => MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
