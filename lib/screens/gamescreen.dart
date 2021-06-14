@@ -68,118 +68,126 @@ class _GameScreenState extends State<GameScreen> {
           ],
         ),
       ),
-      body: AnimatedContainer(
-        duration: Duration(
-          milliseconds: 400,
-        ),
-        color: boardProvider.activePlayer.color[800],
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 30,
-              alignment: Alignment.topCenter,
-              child: boardProvider.gameEnd
-                  ? Text(
-                      boardProvider.winner != null
-                          ? "${boardProvider.winner!.playerName} wins!"
-                          : "It's a Tie!",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    )
-                  : null,
-            ),
-            Center(
-              child: Container(
-                height: boardSide,
-                width: boardSide,
-                child: PlayGrid(boardSide),
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        child: AnimatedContainer(
+          height: mediaQuery.size.height -
+              mediaQuery.padding.top -
+              mediaQuery.padding.bottom,
+          duration: Duration(
+            milliseconds: 400,
+          ),
+          color: boardProvider.activePlayer.color[800],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 30,
+                alignment: Alignment.topCenter,
+                child: boardProvider.gameEnd
+                    ? Text(
+                        boardProvider.winner != null
+                            ? "${boardProvider.winner!.playerName} wins!"
+                            : "It's a Tie!",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )
+                    : null,
               ),
-            ),
-            SizedBox(
-              height: 20 * boardSide / 400,
-            ),
-            AnimatedContainer(
-              duration: Duration(milliseconds: 400),
-              color: boardProvider.activePlayer.color[900],
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                          context: context, builder: (context) => PlayForm());
-                    },
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          boardProvider.player1.symbol,
-                          color: boardProvider.player1.color,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(boardProvider.player1.playerName),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Provider.of<Board>(context, listen: false)
-                          .switchPlayerSymbols();
-                    },
-                    icon: Icon(
-                      Icons.swap_horiz_rounded,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      primary: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          boardProvider.player2.symbol,
-                          color: boardProvider.player2.color,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
-                        Text(boardProvider.computer
-                            ? 'Computer'
-                            : boardProvider.player2.playerName),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            AnimatedContainer(
-              padding: EdgeInsets.only(
-                  left: animatedBarOffset * 1.05, right: animatedBarOffset),
-              duration: Duration(milliseconds: 400),
-              child: Container(
-                height: 5,
-                width: 100,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+              Center(
+                child: Container(
+                  height: boardSide,
+                  width: boardSide,
+                  child: PlayGrid(boardSide),
                 ),
               ),
-              alignment: boardProvider.activePlayer.playerId ==
-                      boardProvider.player1.playerId
-                  ? Alignment.centerLeft
-                  : Alignment.centerRight,
-            )
-          ],
+              SizedBox(
+                height: 20 * boardSide / 400,
+              ),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                color: boardProvider.activePlayer.color[900],
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => PlayForm(boardProvider.player1),
+                        );
+                      },
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            boardProvider.player1.symbol,
+                            color: boardProvider.player1.color,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(boardProvider.player1.playerName),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        Provider.of<Board>(context, listen: false)
+                            .switchPlayerSymbols();
+                      },
+                      icon: Icon(
+                        Icons.swap_horiz_rounded,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            boardProvider.player2.symbol,
+                            color: boardProvider.player2.color,
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(boardProvider.computer
+                              ? 'Computer'
+                              : boardProvider.player2.playerName),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              AnimatedContainer(
+                padding: EdgeInsets.only(
+                    left: animatedBarOffset * 1.05, right: animatedBarOffset),
+                duration: Duration(milliseconds: 400),
+                child: Container(
+                  height: 5,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                alignment: boardProvider.activePlayer.playerId ==
+                        boardProvider.player1.playerId
+                    ? Alignment.centerLeft
+                    : Alignment.centerRight,
+              )
+            ],
+          ),
         ),
       ),
     );
