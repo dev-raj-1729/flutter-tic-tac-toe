@@ -30,8 +30,9 @@ class Log with ChangeNotifier {
 
   Future<void> fetchAndUpdate() async {
     final items = await db.collection(path).get();
+    if (items == null) return;
     _logs = [];
-    items!.forEach((key, value) {
+    items.forEach((key, value) {
       // print(key.split('/').last);
       _logs.add(_mapToLogItem(value, key.split('/').last));
     });

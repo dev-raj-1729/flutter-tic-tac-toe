@@ -14,23 +14,71 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  // void _showWinnerAlert(String msg) async {
-  //   return showDialog<void>(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Game Over!'),
-  //       content: Text(msg),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () {
-  //             // Navigator.of(context).pop();
-  //           },
-  //           child: Text("Ok"),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  void _showWinnerAlert(String msg) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Game Over!'),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text("Ok"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool?> _startNewGameAlert() async {
+    return showDialog<bool?>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Start New Game?'),
+        content: Text('All progress in current one will be lost'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text('No'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool?> _goBackAlert() async {
+    return showDialog<bool?>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Exit to main menu?'),
+        content: Text('All progress in current game will be lost'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: Text('No'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +87,13 @@ class _GameScreenState extends State<GameScreen> {
     final double boardSide = min(
         600, min(mediaQuery.size.width * 0.90, mediaQuery.size.height * 0.6));
     final double animatedBarOffset = ((mediaQuery.size.width - 200) / 6) * 0.90;
+    if (boardProvider.showMessage == true) {
+      boardProvider.showMessage = false;
+      Future.delayed(Duration.zero).then((value) => _showWinnerAlert(
+          boardProvider.winner != null
+              ? "${boardProvider.winner!.playerName} wins!"
+              : "It's a Tie!"));
+    }
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60 * boardSide / 400),
@@ -47,7 +102,9 @@ class _GameScreenState extends State<GameScreen> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_sharp),
             onPressed: () {
-              Navigator.of(context).pop();
+              _goBackAlert().then((value) {
+                if (value == true) Navigator.of(context).pop();
+              });
             },
           ),
           title: Text('Tic-Tac-Toe'),
@@ -61,7 +118,9 @@ class _GameScreenState extends State<GameScreen> {
               ),
             IconButton(
               onPressed: () {
-                Provider.of<Board>(context, listen: false).reset();
+                _startNewGameAlert().then((value) {
+                  if (value == true) boardProvider.reset();
+                });
               },
               icon: Icon(Icons.add),
             ),

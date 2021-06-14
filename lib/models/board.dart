@@ -22,6 +22,7 @@ class Board with ChangeNotifier {
   late Player activePlayer;
   bool gameStart = false;
   bool gameEnd = false;
+  bool showMessage = false;
   bool _computerAsPlayer2 = false;
   Player? _winner;
   late List<List<BoardBox>> _matrix;
@@ -100,6 +101,7 @@ class Board with ChangeNotifier {
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      showMessage = true;
       _addToLog();
       return;
     }
@@ -107,6 +109,7 @@ class Board with ChangeNotifier {
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      showMessage = true;
       _addToLog();
       return;
     }
@@ -114,11 +117,13 @@ class Board with ChangeNotifier {
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      showMessage = true;
       _addToLog();
       return;
     }
     if (checkTie()) {
       gameEnd = true;
+      showMessage = true;
       _addToLog();
     }
   }
