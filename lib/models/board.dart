@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board_box.dart';
-import 'package:flutter_tic_tac_toe/models/computer.dart';
-import 'package:flutter_tic_tac_toe/models/log.dart';
-import 'package:flutter_tic_tac_toe/models/logitem.dart';
-import 'package:flutter_tic_tac_toe/models/move.dart';
-import 'package:flutter_tic_tac_toe/models/player.dart';
+
+import 'board_box.dart';
+import 'computer.dart';
+import 'log.dart';
+import 'logitem.dart';
+import 'move.dart';
+import 'player.dart';
 
 class Board with ChangeNotifier {
   Player player1 = Player(

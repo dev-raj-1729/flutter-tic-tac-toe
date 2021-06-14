@@ -1,11 +1,12 @@
 import 'dart:math';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
-import 'package:flutter_tic_tac_toe/screens/logscreen.dart';
+
 import 'package:provider/provider.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
+import '../models/board.dart';
+import 'gamescreen.dart';
+import 'logscreen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override

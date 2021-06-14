@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/models/move.dart';
+
 import 'package:provider/provider.dart';
+
+import '../models/board.dart';
+import '../models/move.dart';
 
 class PlayTile extends StatelessWidget {
   final int row;

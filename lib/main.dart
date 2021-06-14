@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/models/log.dart';
-import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
-import 'package:flutter_tic_tac_toe/screens/homescreen.dart';
-import 'package:flutter_tic_tac_toe/screens/logscreen.dart';
 import 'package:localstore/localstore.dart';
 import 'package:provider/provider.dart';
+
+import 'models/board.dart';
+import 'models/log.dart';
+import 'screens/gamescreen.dart';
+import 'screens/homescreen.dart';
+import 'screens/logscreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +23,6 @@ class MyApp extends StatelessWidget {
     final ls = Log(Localstore.instance);
     ls.fetchAndUpdate();
     return MultiProvider(
-      // create: (context) => Board(),
       providers: [
         ChangeNotifierProvider<Board>(create: (context) => Board(ls)),
         ChangeNotifierProvider.value(value: ls),
@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        // home: HomeScreen(),
         routes: <String, WidgetBuilder>{
           '/': (context) => HomeScreen(),
           GameScreen.routeName: (context) => GameScreen(),

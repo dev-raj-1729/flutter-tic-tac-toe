@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/player.dart';
+
+import '../models/player.dart';
 
 class PlayForm extends StatefulWidget {
   final Player player;

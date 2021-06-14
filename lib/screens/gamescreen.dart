@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/board.dart';
-import 'package:flutter_tic_tac_toe/widgets/play_form.dart';
-import 'package:flutter_tic_tac_toe/widgets/play_grid.dart';
-import 'package:provider/provider.dart';
 import 'dart:math';
+import 'package:flutter/material.dart';
+
+import 'package:provider/provider.dart';
+
+import '../models/board.dart';
+import '../widgets/play_form.dart';
+import '../widgets/play_grid.dart';
 
 class GameScreen extends StatefulWidget {
   static const routeName = '/gamescreen';

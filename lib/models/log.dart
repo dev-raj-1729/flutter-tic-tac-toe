@@ -1,6 +1,8 @@
-import 'package:flutter_tic_tac_toe/models/logitem.dart';
-import 'package:localstore/localstore.dart';
 import 'package:flutter/material.dart';
+
+import 'package:localstore/localstore.dart';
+
+import 'logitem.dart';
 
 class Log with ChangeNotifier {
   static const path = 'logs';

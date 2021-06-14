@@ -1,4 +1,4 @@
-import 'package:flutter_tic_tac_toe/models/player.dart';
+import 'player.dart';
 
 class Move {
   int x;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/models/log.dart';
+
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
+import '../models/log.dart';
 
 class LogScreen extends StatelessWidget {
   static const routeName = '/logscreen';
