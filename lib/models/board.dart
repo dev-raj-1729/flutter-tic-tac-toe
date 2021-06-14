@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board_box.dart';
 import 'package:flutter_tic_tac_toe/models/computer.dart';
+import 'package:flutter_tic_tac_toe/models/log.dart';
+import 'package:flutter_tic_tac_toe/models/logitem.dart';
 import 'package:flutter_tic_tac_toe/models/move.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
 
@@ -23,8 +25,8 @@ class Board with ChangeNotifier {
   bool _computerAsPlayer2 = false;
   Player? _winner;
   late List<List<BoardBox>> _matrix;
-
-  Board() {
+  final Log _ls;
+  Board(this._ls) {
     activePlayer = player1;
     _matrix = new List<List<BoardBox>>.generate(
       3,
@@ -98,22 +100,26 @@ class Board with ChangeNotifier {
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      _addToLog();
       return;
     }
     tempWinner = checkColumn();
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      _addToLog();
       return;
     }
     tempWinner = checkDiagonals();
     if (tempWinner != null) {
       _winner = tempWinner;
       gameEnd = true;
+      _addToLog();
       return;
     }
     if (checkTie()) {
       gameEnd = true;
+      _addToLog();
     }
   }
 
@@ -253,5 +259,30 @@ class Board with ChangeNotifier {
     player2.color = tempcol;
     player2.symbol = tempsymb;
     notifyListeners();
+  }
+
+  void _addToLog() {
+    if (winner == null && gameEnd == false) return;
+    if (winner == null) {
+      _ls.addItem(LogItem(
+          winner: player1.playerName,
+          loser: computer ? 'Computer' : player2.playerName,
+          date: DateTime.now(),
+          tie: true));
+      return;
+    }
+    String winnerName = winner!.playerId == player2.playerId && computer
+        ? 'Computer'
+        : winner!.playerName;
+    String loserName = winner!.playerId == player1.playerId
+        ? computer
+            ? 'Computer'
+            : player2.playerName
+        : player1.playerName;
+    _ls.addItem(LogItem(
+        winner: winnerName,
+        loser: loserName,
+        date: DateTime.now(),
+        tie: false));
   }
 }
