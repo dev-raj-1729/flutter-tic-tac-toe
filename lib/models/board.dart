@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'board_box.dart';
 import 'computer.dart';
 import 'log.dart';
-import 'logitem.dart';
+import 'log_item.dart';
 import 'move.dart';
 import 'player.dart';
 

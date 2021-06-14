@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:localstore/localstore.dart';
 
-import 'logitem.dart';
+import 'log_item.dart';
 
 class Log with ChangeNotifier {
   static const path = 'logs';
