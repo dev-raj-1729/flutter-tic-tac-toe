@@ -1,5 +1,4 @@
 class Utils {
-  //region utility
   static bool isBoardFull(List<int> board) {
     for (var val in board) {
       if (val == Ai.EMPTY_SPACE) return false;
@@ -15,12 +14,10 @@ class Utils {
     return true;
   }
 
-  /// Returns the current state of the board [winning player, draw or no winners yet]
   static int evaluateBoard(List<int> board) {
     for (var list in Ai.WIN_CONDITIONS_LIST) {
-      if (board[list[0]] != Ai.EMPTY_SPACE && // if a player has played here AND
-          board[list[0]] ==
-              board[list[1]] && // if all three positions are of the same player
+      if (board[list[0]] != Ai.EMPTY_SPACE &&
+          board[list[0]] == board[list[1]] &&
           board[list[0]] == board[list[2]]) {
         return board[list[0]];
       }
@@ -33,7 +30,6 @@ class Utils {
     return Ai.NO_WINNERS_YET;
   }
 
-  /// Returns the opposite player from the current one.
   static int flipPlayer(int currentPlayer) {
     return -1 * currentPlayer;
   }
@@ -41,7 +37,6 @@ class Utils {
 }
 
 class Ai {
-  // evaluation condition values
   static const int HUMAN = 1;
   static const int AI_PLAYER = -1;
   static const int NO_WINNERS_YET = 0;
@@ -50,7 +45,6 @@ class Ai {
   static const int EMPTY_SPACE = 0;
   static const SYMBOLS = {EMPTY_SPACE: "", HUMAN: "X", AI_PLAYER: "O"};
 
-  // arbitrary values for winning, draw and losing conditions
   static const int WIN_SCORE = 100;
   static const int DRAW_SCORE = 0;
   static const int LOSE_SCORE = -100;
@@ -66,13 +60,10 @@ class Ai {
     [2, 4, 6],
   ];
 
-  /// Returns the optimal move based on the state of the board.
   int play(List<int> board, int currentPlayer) {
     return _getBestMove(board, currentPlayer).move;
   }
 
-  /// Returns the best possible score for a certain board condition.
-  /// This method implements the stopping condition.
   int _getBestScore(List<int> board, int currentPlayer) {
     int evaluation = Utils.evaluateBoard(board);
 
@@ -87,27 +78,20 @@ class Ai {
     return _getBestMove(board, currentPlayer).score;
   }
 
-  /// This is where the actual Minimax algorithm is implemented
   ComputerMove _getBestMove(List<int> board, int currentPlayer) {
-    // try all possible moves
     List<int> newBoard;
-    // will contain our next best score
+
     ComputerMove bestMove = ComputerMove(score: -10000, move: -1);
 
     for (int currentMove = 0; currentMove < board.length; currentMove++) {
       if (!Utils.isMoveLegal(board, currentMove)) continue;
 
-      // we need a copy of the initial board so we don't pollute our real board
       newBoard = List.from(board);
 
-      // make the move
       newBoard[currentMove] = currentPlayer;
 
-      // solve for the next player
-      // what is a good score for the opposite player is opposite of good score for us
       int nextScore = -_getBestScore(newBoard, Utils.flipPlayer(currentPlayer));
 
-      // check if the current move is better than our best found move
       if (nextScore > bestMove.score) {
         bestMove.score = nextScore;
         bestMove.move = currentMove;

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
+import 'package:flutter_tic_tac_toe/models/log.dart';
 import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
 import 'package:flutter_tic_tac_toe/screens/homescreen.dart';
+import 'package:flutter_tic_tac_toe/screens/logscreen.dart';
+import 'package:localstore/localstore.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -16,8 +19,14 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => Board(),
+    final ls = Log(Localstore.instance);
+    ls.fetchAndUpdate();
+    return MultiProvider(
+      // create: (context) => Board(),
+      providers: [
+        ChangeNotifierProvider<Board>(create: (context) => Board(ls)),
+        ChangeNotifierProvider.value(value: ls),
+      ],
       builder: (context, _) => MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -26,7 +35,8 @@ class MyApp extends StatelessWidget {
         // home: HomeScreen(),
         routes: <String, WidgetBuilder>{
           '/': (context) => HomeScreen(),
-          GameScreen.routeName: (context) => GameScreen()
+          GameScreen.routeName: (context) => GameScreen(),
+          LogScreen.routeName: (context) => LogScreen(),
         },
       ),
     );

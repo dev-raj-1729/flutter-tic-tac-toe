@@ -4,6 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/board.dart';
 import 'package:flutter_tic_tac_toe/screens/gamescreen.dart';
+import 'package:flutter_tic_tac_toe/screens/logscreen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -79,7 +80,28 @@ class HomeScreen extends StatelessWidget {
                   Navigator.of(context).pushNamed(GameScreen.routeName);
                 },
               ),
-            )
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: min(mediaQuery.size.width * 0.90, 350),
+              height: 50,
+              // padding: EdgeInsets.all(10),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  textStyle: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: Text('History'),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(LogScreen.routeName);
+                },
+              ),
+            ),
           ],
         ),
       ),

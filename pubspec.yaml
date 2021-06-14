@@ -30,6 +30,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   provider: ^5.0.0
   animated_text_kit: ^4.2.1
+  localstore: ^1.2.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
