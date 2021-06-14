@@ -33,7 +33,6 @@ class Utils {
   static int flipPlayer(int currentPlayer) {
     return -1 * currentPlayer;
   }
-//endregion
 }
 
 class Ai {

@@ -35,7 +35,6 @@ class Log with ChangeNotifier {
     if (items == null) return;
     _logs = [];
     items.forEach((key, value) {
-      // print(key.split('/').last);
       _logs.add(_mapToLogItem(value, key.split('/').last));
     });
     notifyListeners();

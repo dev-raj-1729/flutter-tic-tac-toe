@@ -64,7 +64,6 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: min(mediaQuery.size.width * 0.90, 350),
               height: 50,
-              // padding: EdgeInsets.all(10),
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -88,7 +87,6 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: min(mediaQuery.size.width * 0.90, 350),
               height: 50,
-              // padding: EdgeInsets.all(10),
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white,

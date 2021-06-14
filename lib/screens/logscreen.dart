@@ -10,7 +10,6 @@ class LogScreen extends StatelessWidget {
   const LogScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // final logProvider = Provider.of<Log>(context,listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
