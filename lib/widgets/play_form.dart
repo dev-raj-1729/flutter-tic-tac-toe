@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tic_tac_toe/models/player.dart';
 
 class PlayForm extends StatefulWidget {
-  Player player;
+  final Player player;
   PlayForm(this.player);
   @override
   _PlayFormState createState() => _PlayFormState();
@@ -10,6 +10,13 @@ class PlayForm extends StatefulWidget {
 
 class _PlayFormState extends State<PlayForm> {
   final _formKey = GlobalKey<FormState>();
+  void _submitForm() {
+    if (_formKey.currentState!.validate() == false) {
+      return;
+    }
+    _formKey.currentState!.save();
+    Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +25,26 @@ class _PlayFormState extends State<PlayForm> {
       child: Form(
         key: _formKey,
         child: Container(
-          height: 50 + MediaQuery.of(context).viewInsets.bottom,
+          height: 120 + MediaQuery.of(context).viewInsets.bottom,
           child: Column(
             children: [
               TextFormField(
                 initialValue: widget.player.playerName,
-                onFieldSubmitted: (value) {
-                  widget.player.playerName = value;
-                  Navigator.of(context).pop();
+                autovalidateMode: AutovalidateMode.always,
+                onSaved: (value) {
+                  widget.player.playerName = value!;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Player name can't be empty";
+                  }
+                  if (value.length > 10) {
+                    return "Player name must be 10 characters or less";
+                  }
+                  return null;
                 },
               ),
+              TextButton(onPressed: _submitForm, child: Text('OK'))
             ],
           ),
         ),

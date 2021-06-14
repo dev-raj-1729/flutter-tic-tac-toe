@@ -147,7 +147,13 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (boardProvider.computer) return;
+                        showModalBottomSheet(
+                          context: context,
+                          builder: (context) => PlayForm(boardProvider.player2),
+                        );
+                      },
                       style: TextButton.styleFrom(
                         primary: Colors.white,
                       ),
