@@ -46,7 +46,8 @@ class LogScreen extends StatelessWidget {
                     ),
                     child: Card(
                       child: ListTile(
-                        title: Text('${log.winner} won against ${log.loser}'),
+                        title: Text(
+                            '${log.winner} ${log.tie ? 'tied' : 'won'} against ${log.loser}'),
                         subtitle: Text(
                             'Date : ${DateFormat('dd-MM-yyyy').format(log.date)}'),
                       ),

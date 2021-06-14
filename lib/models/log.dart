@@ -55,6 +55,12 @@ class Log with ChangeNotifier {
   }
 
   List<LogItem> get logs {
-    return [..._logs.reversed];
+    _logs.sort((item1, item2) {
+      if (item1.date.isAfter(item2.date)) {
+        return -1;
+      }
+      return 1;
+    });
+    return [..._logs];
   }
 }
