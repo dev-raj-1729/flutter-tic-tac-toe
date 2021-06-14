@@ -30,6 +30,30 @@ class LogScreen extends StatelessWidget {
                     onDismissed: (_) {
                       logProvider.removeItemById(log.id);
                     },
+                    confirmDismiss: (_) => showDialog<bool>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Delete log?'),
+                          content:
+                              Text('Are you sure you want to delete this?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                              child: Text('Yes'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: Text('No'),
+                            )
+                          ],
+                        );
+                      },
+                    ),
                     key: Key(log.id),
                     direction: DismissDirection.startToEnd,
                     background: Container(
