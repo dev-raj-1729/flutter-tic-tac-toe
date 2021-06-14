@@ -6,8 +6,18 @@ class PlayForm extends StatefulWidget {
 }
 
 class _PlayFormState extends State<PlayForm> {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Text('Play Form');
+    return Form(
+      child: Column(
+        children: [
+          TextFormField(
+            initialValue: "PlayerName",
+          )
+        ],
+      ),
+    );
   }
 }
