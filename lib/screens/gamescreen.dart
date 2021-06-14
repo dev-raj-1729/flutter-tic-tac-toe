@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_tic_tac_toe/widgets/alerts.dart';
 
 import 'package:provider/provider.dart';
 
 import '../models/board.dart';
+import '../widgets/alerts.dart';
 import '../widgets/play_form.dart';
 import '../widgets/play_grid.dart';
 
