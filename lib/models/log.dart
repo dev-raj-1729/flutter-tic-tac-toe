@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:localstore/localstore.dart';
 
-import 'logitem.dart';
+import 'log_item.dart';
 
 class Log with ChangeNotifier {
   static const path = 'logs';
@@ -35,7 +35,6 @@ class Log with ChangeNotifier {
     if (items == null) return;
     _logs = [];
     items.forEach((key, value) {
-      // print(key.split('/').last);
       _logs.add(_mapToLogItem(value, key.split('/').last));
     });
     notifyListeners();

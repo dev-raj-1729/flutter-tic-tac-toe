@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 
 import '../models/log.dart';
+import '../widgets/log_tile.dart';
 
 class LogScreen extends StatelessWidget {
   static const routeName = '/logscreen';
-  const LogScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // final logProvider = Provider.of<Log>(context,listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
@@ -28,56 +26,9 @@ class LogScreen extends StatelessWidget {
                 itemCount: logProvider.logs.length,
                 itemBuilder: (context, index) {
                   final log = logProvider.logs[index];
-                  return Dismissible(
-                    onDismissed: (_) {
-                      logProvider.removeItemById(log.id);
-                    },
-                    confirmDismiss: (_) => showDialog<bool>(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: Text('Delete log?'),
-                          content:
-                              Text('Are you sure you want to delete this?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(true);
-                              },
-                              child: Text('Yes'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(false);
-                              },
-                              child: Text('No'),
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                    key: Key(log.id),
-                    direction: DismissDirection.startToEnd,
-                    background: Container(
-                      padding: EdgeInsets.only(left: 20),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.red),
-                      child: Icon(
-                        Icons.delete,
-                        color: Colors.white,
-                        size: 30,
-                      ),
-                      alignment: Alignment.centerLeft,
-                    ),
-                    child: Card(
-                      child: ListTile(
-                        title: Text(
-                            '${log.winner} ${log.tie ? 'tied' : 'won'} against ${log.loser}'),
-                        subtitle: Text(
-                            'Date : ${DateFormat('dd-MM-yyyy').format(log.date)}'),
-                      ),
-                    ),
+                  return LogTile(
+                    log: log,
+                    removeItem: logProvider.removeItemById,
                   );
                 },
               ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'board_box.dart';
 import 'computer.dart';
 import 'log.dart';
-import 'logitem.dart';
+import 'log_item.dart';
 import 'move.dart';
 import 'player.dart';
 
@@ -38,7 +38,6 @@ class Board with ChangeNotifier {
       ),
     );
     notifyListeners();
-    // print(_matrix);
   }
   List<List<BoardBox>> get matrix {
     return [..._matrix];
@@ -52,7 +51,6 @@ class Board with ChangeNotifier {
     }
     gameStart = true;
     _matrix[m.y][m.x].playerId = m.player.playerId;
-    print('this works');
     _checkWinner();
     _switchActivePlayer();
     notifyListeners();
@@ -243,17 +241,12 @@ class Board with ChangeNotifier {
     activePlayer = player2;
     notifyListeners();
     Future.delayed(Duration(milliseconds: 1000)).then((value) {
-      // Move next = Computer.nextMove(toIntGrid(), player2, player1);
-      print(toIntList());
       int move = Ai().play(toIntList(), -1);
-      print(move);
       Move next = Move(x: move % 3, y: move ~/ 3, player: player2);
-      // if (_matrix[next.y][next.x].playerId == null) {
       _matrix[next.y][next.x].playerId = next.player.playerId;
       _switchActivePlayer();
       _checkWinner();
       notifyListeners();
-      // }
     });
   }
 

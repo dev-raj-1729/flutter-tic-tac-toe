@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: min(250, mediaQuery.size.height * 25),
+              height: min(250, mediaQuery.size.height * 0.25),
               alignment: Alignment.center,
               child: AnimatedTextKit(
                 animatedTexts: [
@@ -64,7 +64,6 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: min(mediaQuery.size.width * 0.90, 350),
               height: 50,
-              // padding: EdgeInsets.all(10),
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white,
@@ -88,7 +87,6 @@ class HomeScreen extends StatelessWidget {
             Container(
               width: min(mediaQuery.size.width * 0.90, 350),
               height: 50,
-              // padding: EdgeInsets.all(10),
               child: TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.white,

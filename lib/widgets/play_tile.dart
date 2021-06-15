@@ -24,7 +24,6 @@ class PlayTile extends StatelessWidget {
           );
         },
         style: ElevatedButton.styleFrom(
-          // onSurface: Colors.red,
           primary: cell.playerId != null
               ? cell.playerId == boardProvider.player1.playerId
                   ? boardProvider.player1.color

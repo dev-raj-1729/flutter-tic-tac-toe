@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/board.dart';
+import '../widgets/alerts.dart';
 import '../widgets/play_form.dart';
 import '../widgets/play_grid.dart';
 
@@ -16,72 +17,6 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
-  void _showWinnerAlert(String msg) async {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Game Over!'),
-        content: Text(msg),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text("Ok"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<bool?> _startNewGameAlert() async {
-    return showDialog<bool?>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Start New Game?'),
-        content: Text('All progress in current one will be lost'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: Text('Yes'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text('No'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<bool?> _goBackAlert() async {
-    return showDialog<bool?>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Exit to main menu?'),
-        content: Text('All progress in current game will be lost'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: Text('Yes'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: Text('No'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -91,7 +26,8 @@ class _GameScreenState extends State<GameScreen> {
     final double animatedBarOffset = ((mediaQuery.size.width - 200) / 6) * 0.90;
     if (boardProvider.showMessage == true) {
       boardProvider.showMessage = false;
-      Future.delayed(Duration.zero).then((value) => _showWinnerAlert(
+      Future.delayed(Duration.zero).then((value) => Alerts.showWinnerAlert(
+          context,
           boardProvider.winner != null
               ? "${boardProvider.winner!.playerName} wins!"
               : "It's a Tie!"));
@@ -104,7 +40,7 @@ class _GameScreenState extends State<GameScreen> {
           leading: IconButton(
             icon: Icon(Icons.arrow_back_sharp),
             onPressed: () {
-              _goBackAlert().then((value) {
+              Alerts.goBackAlert(context).then((value) {
                 if (value == true) Navigator.of(context).pop();
               });
             },
@@ -120,7 +56,7 @@ class _GameScreenState extends State<GameScreen> {
               ),
             IconButton(
               onPressed: () {
-                _startNewGameAlert().then((value) {
+                Alerts.startNewGameAlert(context).then((value) {
                   if (value == true) boardProvider.reset();
                 });
               },
