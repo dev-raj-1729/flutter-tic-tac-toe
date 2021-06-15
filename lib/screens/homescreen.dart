@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: min(250, mediaQuery.size.height * 25),
+              height: min(250, mediaQuery.size.height * 0.25),
               alignment: Alignment.center,
               child: AnimatedTextKit(
                 animatedTexts: [
